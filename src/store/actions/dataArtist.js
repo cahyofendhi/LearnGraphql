@@ -1,7 +1,7 @@
 import { FETCH_ARTIST_BY_NAME, START_LOADING, STOP_LOADING  } from "./actionTypes";
 
-import client from "../../client";
-import { artistQuery } from "../../actions/graphql/queries";
+import client from "../../service/client";
+import { artistQuery } from "./graphql/queries";
 
 export const getArtist = name => dispatch => {
   if (name.length > 0) {
