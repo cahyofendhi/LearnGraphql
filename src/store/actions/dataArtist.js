@@ -11,6 +11,7 @@ export const getArtist = name => dispatch => {
     })
     .then(resp => {
       if (resp.data) {
+        alert(`Data : ${JSON.stringify(resp.data)}`)
         dispatch(setDataArtist(resp.data.queryArtists));
       }
     })
