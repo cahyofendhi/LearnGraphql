@@ -11,7 +11,7 @@ const client = new ApolloClient({
   link: ApolloLink.from([
     onError(({ graphQLErrors, networkError }) => {
       if (graphQLErrors) {
-        graphQLErrors.map(({ message, locations, path }) =>
+        graphQLErrors.map(() =>
           console.log(`test`)
         );
       }
@@ -21,7 +21,7 @@ const client = new ApolloClient({
     }),
     new HttpLink({
       uri: NETWORK_INTERFACE_URL,
-      credentials: "same-origin"
+      headers: {}
     })
   ]),
   cache: new InMemoryCache()

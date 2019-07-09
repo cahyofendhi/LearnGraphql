@@ -7,11 +7,11 @@ import { getArtist } from '../store/actions/index';
 class Main extends Component {
 
   state = {
-    name: '',
+    name: 'Nella',
   };
 
   componentDidMount() {
-    this.props.onGetArtist('');
+    this.props.onGetArtist(this.state.name);
   }
 
   handlingSearch = () => {
