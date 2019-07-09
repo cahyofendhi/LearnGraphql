@@ -1,7 +1,8 @@
-import { FETCH_ARTIST_BY_NAME } from "../actions/actionTypes";
+import { FETCH_ARTIST_BY_NAME, START_LOADING, STOP_LOADING } from "../actions/actionTypes";
 
 const initialiaze = {
-  artist: []
+  artist: [],
+  isLoading: false
 };
 
 const reducer = (state = initialiaze, action) => {
@@ -11,6 +12,16 @@ const reducer = (state = initialiaze, action) => {
         ...state,
         artist: action.artist
       };
+    case START_LOADING: 
+      return {
+        ...state,
+        isLoading: true
+      }
+    case STOP_LOADING:
+      return {
+        ...state,
+        isLoading: false
+      }
     default:
       return state;
   }

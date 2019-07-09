@@ -1,16 +1,26 @@
 import React, { Component } from 'react';
-import { View, Text, Image, FlatList, StyleSheet } from 'react-native';
-
+import { View, Text, TextInput, Button, Image, FlatList, StyleSheet } from 'react-native';
+import { ProgressDialog } from 'react-native-simple-dialogs';
 import { connect } from 'react-redux';
 import { getArtist } from '../store/actions/index';
 
 class Main extends Component {
+
+  state = {
+    name: '',
+  };
+
   componentDidMount() {
-    this.props.onGetArtist('Pink Floyd');
+    this.props.onGetArtist('');
   }
 
+  handlingSearch = () => {
+    this.props.onGetArtist(this.state.name);
+  }
+
+
   render() {
-    let contentView = null;
+    let contentView = (<Text>Data is Empty</Text>);
     if (this.props.movie !== null) {
       contentView = (
           <FlatList
@@ -29,14 +39,64 @@ class Main extends Component {
       );
     }
 
-    return <View style={styles.container}>{contentView}</View>;
+    let { name } = this.state;
+
+    return (
+      <View style={styles.container}>
+        <View style={styles.inputContent}>
+
+           <TextInput
+              style={styles.inputText}
+              onChangeText={(name) => this.setState({name})}
+              value={name}
+            />
+
+          <Button
+            style={styles.button}
+            title="Search"
+            onPress={this.handlingSearch}
+          />
+
+        </View>
+        {contentView}
+        <ProgressDialog
+            visible={this.props.isLoading}
+            title="Progress"
+            message="Please, wait..."
+        />
+    </View>);
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 30
+    flexDirection: 'column'
+  },
+  inputContent: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 30,
+    padding: 10
+  },
+  inputText: {
+    flex: 1,
+    marginLeft: 10,
+    paddingLeft: 10,
+    paddingRight: 10,
+    height: 40,
+    borderRadius:10,
+    backgroundColor: '#F4F6F8',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+  },
+  button: {
+    marginRight: 10,
+    padding: 5,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center'
   },
   content: {
     flex: 1, 
@@ -59,7 +119,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    artist: state.dataConfigure.artist
+    artist: state.dataConfigure.artist,
+    isLoading: state.dataConfigure.isLoading
   };
 };
 
